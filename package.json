@@ -1,5 +1,5 @@
 {
-  "name": "FranticScore",
+  "name": "frantic-score",
   "private": true,
   "scripts": {
     "build": "turbo run build",
