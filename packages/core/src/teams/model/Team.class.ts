@@ -7,7 +7,7 @@ export default class Team {
         if (!team.category || !team.group || !team.name || !team.type) {
             throw new Error("Todos os campos obrigatórios devem ser preenchidos!");
         }
-        const hasTeam = await this.repo.getTeamByName(team.name!);
+        const hasTeam = await this.repo.getTeamByName(team.name);
         if (hasTeam) {
             throw new Error("O time já foi cadastrado!");
         }
