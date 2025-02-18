@@ -1,0 +1,23 @@
+{
+  "name": "@frantic/core",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --dts --minify",
+    "dev": "tsup src/index.ts --dts --watch",
+    "test": "jest --watchAll --collectCoverage"
+  },
+  "keywords": [],
+  "author": "Luan Alves",
+  "license": "ISC",
+  "description": "rules business",
+  "dependencies": {
+    "tsup": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5"
+  }
+}
