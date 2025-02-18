@@ -67,4 +67,9 @@ describe("Game class", () => {
 
     await expect(gameService.addGame(newGame)).rejects.toThrow("O time 1 e o time 2 não podem ser o mesmo time");
   });
+  it("must recover all games", async () => {
+    const games: IGames[] = [{ id: "1", location: "Estádio 1" } as IGames];
+    mockRepo.getGames.mockResolvedValue(games);
+    await expect(gameService.getGames()).resolves.toEqual(games);
+  });
 });
