@@ -1,3 +1,4 @@
+import { mockGame, team } from "../__mocks__/mocks";
 import { IGamesRepository, Game, IGames, EStateGame } from "../games";
 import { ECategoryTeam, ETypeTeam } from "../teams";
 const mockRepo: jest.Mocked<IGamesRepository> = {
@@ -11,27 +12,7 @@ const mockRepo: jest.Mocked<IGamesRepository> = {
   updateGame: jest.fn(),
   updateState: jest.fn(),
 };
-const mockGame: IGames = {
-  id: "1",
-  team1: {
-    id: "t1",
-    name: "Time 1",
-    category: "SUB15MEN" as ECategoryTeam,
-    type: "FUTSAL" as ETypeTeam,
-    group: "A",
-  },
-  team2: {
-    id: "t2",
-    name: "Time 2",
-    category: "SUB15MEN" as ECategoryTeam,
-    type: "FUTSAL" as ETypeTeam,
-    group: "A",
-  },
-  date: new Date(),
-  time: 15,
-  location: "Estádio 1",
-  state: "AGUARDANDO" as EStateGame,
-};
+
 describe("Game class", () => {
   let gameService: Game;
 
@@ -77,5 +58,13 @@ describe("Game class", () => {
     };
 
     await expect(gameService.addGame(newGame)).rejects.toThrow("Já existe um jogo neste local e horário");
+  });
+  it("should prevent adding a game with the same teams", async () => {
+    const newGame: Partial<IGames> = {
+        team1:team,
+        team2: team
+    };
+
+    await expect(gameService.addGame(newGame)).rejects.toThrow("O time 1 e o time 2 não podem ser o mesmo time");
   });
 });
