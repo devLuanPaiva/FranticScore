@@ -1,3 +1,4 @@
+import { team } from "../__mocks__/mocks";
 import { ECategoryTeam, ETypeTeam, ITeam, ITeamsRepository, Team } from "../teams";
 
 const mockRepo: jest.Mocked<ITeamsRepository> = {
@@ -21,24 +22,12 @@ describe("Team class", () => {
     await expect(teamService.addTeam(incompleteTeam)).rejects.toThrow("Todos os campos obrigatórios devem ser preenchidos!");
   });
   test("should not add a duplicate team", async () => {
-    const team: Partial<ITeam> = {
-      name: "Team A",
-      category: "SUB15MEN" as ECategoryTeam,
-      type: "FUTSAL" as ETypeTeam,
-      group: "A",
-    }
-    mockRepo.getTeamByName.mockResolvedValueOnce(team as ITeam)
+   
+    mockRepo.getTeamByName.mockResolvedValueOnce(team)
     await expect(teamService.addTeam(team)).rejects.toThrow('O time já foi cadastrado!')
   })
   test("should add a valid team", async () => {
-    const existingTeam: ITeam = {
-      id: "1",
-      name: "Team A",
-      category: "SUB15MEN" as ECategoryTeam,
-      type: "FUTSAL" as ETypeTeam,
-      group: "A",
-    };
-    mockRepo.getTeamById.mockResolvedValue(existingTeam)
+    mockRepo.getTeamById.mockResolvedValue(team)
     await teamService.updateTeam("1", { name: "Updated Team" })
     expect(mockRepo.updateTeam).toBeCalledWith("1", { name: "Updated Team" })
   })
@@ -57,25 +46,11 @@ describe("Team class", () => {
     expect(result).toEqual(teams);
   })
   test("should get a team by ID", async () => {
-    const team: ITeam = {
-      id: "1",
-      name: "Team A",
-      category: "SUB15MEN" as ECategoryTeam,
-      type: "FUTSAL" as ETypeTeam,
-      group: "A",
-    };
     mockRepo.getTeamById.mockResolvedValue(team);
     const result = await teamService.getTeamById("1");
     expect(result).toEqual(team);
   })
   test("should get a team by name", async () => {
-    const team: ITeam = {
-      id: "1",
-      name: "Team A",
-      category: "SUB15MEN" as ECategoryTeam,
-      type: "FUTSAL" as ETypeTeam,
-      group: "A",
-    };
     mockRepo.getTeamByName.mockResolvedValue(team);
     const result = await teamService.getTeamByName("Team A");
     expect(result).toEqual(team);
