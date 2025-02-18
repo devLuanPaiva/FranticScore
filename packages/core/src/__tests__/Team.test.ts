@@ -1,4 +1,4 @@
-import { ECategoryTeam, ITeam, ITeamsRepository, Team } from "../teams";
+import { ECategoryTeam, ETypeTeam, ITeam, ITeamsRepository, Team } from "../teams";
 
 const mockRepo: jest.Mocked<ITeamsRepository> = {
   addTeam: jest.fn(),
@@ -20,4 +20,14 @@ describe("Team class", () => {
 
     await expect(teamService.addTeam(incompleteTeam)).rejects.toThrow("Todos os campos obrigatórios devem ser preenchidos!");
   });
+  test("should not add a duplicate team", async () => {
+    const team: Partial<ITeam>={
+      name: "Team A",
+      category: "SUB15MEN" as ECategoryTeam,
+      type: "FUTSAL" as ETypeTeam,
+      group: "A",
+    }
+    mockRepo.getTeamByName.mockResolvedValueOnce(team as ITeam)
+    await expect(teamService.addTeam(team)).rejects.toThrow('O time já foi cadastrado!')
+  })
 });
