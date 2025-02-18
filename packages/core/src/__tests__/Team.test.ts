@@ -56,4 +56,16 @@ describe("Team class", () => {
     const result = await teamService.getTeams();
     expect(result).toEqual(teams);
   })
+  test("should get a team by ID", async () => {
+    const team: ITeam = {
+      id: "1",
+      name: "Team A",
+      category: "SUB15MEN" as ECategoryTeam,
+      type: "FUTSAL" as ETypeTeam,
+      group: "A",
+    };
+    mockRepo.getTeamById.mockResolvedValue(team);
+    const result = await teamService.getTeamById("1");
+    expect(result).toEqual(team);
+  })
 });
