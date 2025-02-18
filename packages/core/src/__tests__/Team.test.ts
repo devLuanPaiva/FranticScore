@@ -21,7 +21,7 @@ describe("Team class", () => {
     await expect(teamService.addTeam(incompleteTeam)).rejects.toThrow("Todos os campos obrigatórios devem ser preenchidos!");
   });
   test("should not add a duplicate team", async () => {
-    const team: Partial<ITeam>={
+    const team: Partial<ITeam> = {
       name: "Team A",
       category: "SUB15MEN" as ECategoryTeam,
       type: "FUTSAL" as ETypeTeam,
@@ -39,7 +39,21 @@ describe("Team class", () => {
       group: "A",
     };
     mockRepo.getTeamById.mockResolvedValue(existingTeam)
-    await teamService.updateTeam("1", {name: "Updated Team"})
-    expect(mockRepo.updateTeam).toBeCalledWith("1", {name: "Updated Team"})
+    await teamService.updateTeam("1", { name: "Updated Team" })
+    expect(mockRepo.updateTeam).toBeCalledWith("1", { name: "Updated Team" })
+  })
+  test("should get all teams", async () => {
+    const teams: ITeam[] = [
+      {
+        id: "1",
+        name: "Team A",
+        category: "SUB15MEN" as ECategoryTeam,
+        type: "FUTSAL" as ETypeTeam,
+        group: "A",
+      },
+    ];
+    mockRepo.getTeams.mockResolvedValue(teams);
+    const result = await teamService.getTeams();
+    expect(result).toEqual(teams);
   })
 });
