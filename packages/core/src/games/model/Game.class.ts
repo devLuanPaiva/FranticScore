@@ -5,7 +5,7 @@ import { IGamesRepository } from "./IGamesRepository";
 
 export default class Game {
   constructor(private readonly repo: IGamesRepository) {}
-  async addGame(game: Partial<IGames>) {
+  async addGame(game: Partial<IGames>): Promise<IGames> {
     const games = await this.repo.getGames();
     const hasGameInLocationAndTime = games.find(
       (g) => g.location === game.location && g.time === game.time

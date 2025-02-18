@@ -10,7 +10,7 @@ export interface IGamesRepository {
     getGamesFromType(type: ETypeTeam): Promise<IGames[]>;
     getGamesFromDate(date: Date): Promise<IGames[]>;
     getGamesFromTeam(teamId: number): Promise<IGames[]>;
-    addGame(game: Partial<IGames>): Promise<void>;
+    addGame(game: Partial<IGames>): Promise<IGames>;
     updateGame(id: number, game: Partial<IGames>): Promise<void>;
     updateState(id: number, state: EStateGame): Promise<void>;
 }
