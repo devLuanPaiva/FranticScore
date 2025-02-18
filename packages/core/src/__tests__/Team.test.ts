@@ -30,4 +30,16 @@ describe("Team class", () => {
     mockRepo.getTeamByName.mockResolvedValueOnce(team as ITeam)
     await expect(teamService.addTeam(team)).rejects.toThrow('O time já foi cadastrado!')
   })
+  test("should add a valid team", async () => {
+    const existingTeam: ITeam = {
+      id: "1",
+      name: "Team A",
+      category: "SUB15MEN" as ECategoryTeam,
+      type: "FUTSAL" as ETypeTeam,
+      group: "A",
+    };
+    mockRepo.getTeamById.mockResolvedValue(existingTeam)
+    await teamService.updateTeam("1", {name: "Updated Team"})
+    expect(mockRepo.updateTeam).toBeCalledWith("1", {name: "Updated Team"})
+  })
 });
