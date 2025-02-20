@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,4 +5,53 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Team {
+  id         String        @id @default(uuid())
+  name       String
+  image      String?     
+  category   ECategoryTeam
+  type       ETypeTeam
+  goals      String?     
+  goalByGame String?     
+  group      String
+  games1     Games[]       @relation("Team1")
+  games2     Games[]       @relation("Team2")
+}
+
+model Games {
+  id       String     @id @default(uuid())
+  team1Id  String
+  team2Id  String
+  date     DateTime
+  time     Int
+  location String
+  state    EStateGame
+  
+  team1    Team       @relation("Team1", fields: [team1Id], references: [id])
+  team2    Team       @relation("Team2", fields: [team2Id], references: [id])
+}
+
+enum ECategoryTeam {
+  SUB13WOAN
+  SUB13MEN
+  SUB15WOAN
+  SUB15MEN
+  SUB18WOAN
+  SUB18MEN
+  OPENMEN
+  OPENWOAN
+}
+
+enum ETypeTeam {
+  HANDEBOL
+  FUTSAL
+}
+
+enum EStateGame {
+  WAITING
+  PLAYING
+  PAUSED
+  FINISHED
 }
