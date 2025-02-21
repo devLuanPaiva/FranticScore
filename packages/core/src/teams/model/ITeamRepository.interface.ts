@@ -1,6 +1,7 @@
 import { ITeam } from "./ITeam.interface";
 
 export interface ITeamsRepository {
+    addTeam(team: Partial<ITeam>): Promise<void>
     getTeams(): Promise<ITeam[]>;
     getTeamById(id: string): Promise<ITeam>;
     getTeamByName(name: string): Promise<ITeam>;
