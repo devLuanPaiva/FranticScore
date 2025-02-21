@@ -1,9 +1,8 @@
-/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { PrismaProvider } from './prisma.provider';
+import { PrismaService } from './prisma.service';
 
 @Module({
-  providers: [PrismaProvider],
-  exports: [PrismaProvider],
+  providers: [PrismaService],
+  exports: [PrismaService],
 })
 export class DbModule {}
